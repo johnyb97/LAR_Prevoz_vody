@@ -8,6 +8,7 @@
 #include "Ultrasound.h"
 #include "motorcontrol.h"
 #include "main.h"
+#include "Cerpadlo.h"
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
@@ -36,6 +37,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			distance1++; //posun o daný úhel
 		}
 	}
+	if (GPIO_Pin == Encoder_cerpadlo_Pin){
+			if (HAL_GPIO_ReadPin(Encoder_cerpadlo_GPIO_Port, Encoder_cerpadlo_Pin) == GPIO_PIN_SET){
+				distance_cerpadlo++; //posun o daný úhel
+			}
+		}
 	if (GPIO_Pin == Mikrofon1_Pin){
 			if (HAL_GPIO_ReadPin(EncoderLeft1_GPIO_Port, EncoderLeft1_Pin) == GPIO_PIN_SET){
 				 //

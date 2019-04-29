@@ -47,6 +47,7 @@
 #include "Bluetooth.h"
 #include "Ultrasound.h"
 #include "Step_eng.h"
+#include "Cerpadlo.h"
 //#include "navigator.h"
 /* USER CODE END Includes */
 
@@ -66,7 +67,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim22;
@@ -86,7 +86,6 @@ static void MX_TIM3_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM22_Init(void);
-static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
 
@@ -126,9 +125,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM6_Init();
   MX_TIM22_Init();
-  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   start_motor_control(&htim3);
+  start_cerpadlo_control();
   init_PID();
   init_PID_ultrazvuk();
   start_encoder();
@@ -138,12 +137,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  posun_cerpadla(nahoru);
+	  HAL_Delay(1000);
+	  posun_cerpadla(dolu);
+	  start_cerpani_v_nadrzi(1000);
+	  start_cerpani_v_rameni(1000);
+
     /* USER CODE END WHILE */
-	  Travel_rovne(&htim3,1,1000);
-	  HAL_Delay(500);
-	  Travel_turn(&htim3,90,400);
-	  HAL_Delay(500);
-	/* USER CODE BEGIN 3 */
+
+    /* USER CODE BEGIN 3 */
 
   }
   /* USER CODE END 3 */
@@ -194,51 +196,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 0;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
-
 }
 
 /**
@@ -482,10 +439,14 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(cerpadlo_interni_GPIO_Port, cerpadlo_interni_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, Cerpadlo_posun1_Pin|cerpadlo_interni_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, STEP4_Pin|STEP1_Pin|STEP3_Pin|STEP2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(Cerpadlo_posun2_GPIO_Port, Cerpadlo_posun2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, cerpadlo_externi_Pin|STEP4_Pin|STEP1_Pin|STEP3_Pin 
+                          |STEP2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : Utrasound_sens2_Pin */
   GPIO_InitStruct.Pin = Utrasound_sens2_Pin;
@@ -493,10 +454,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(Utrasound_sens2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Mikrofon3_Pin PB12 EncoderRigth2_Pin EncoderLeft1_Pin 
-                           EncoderRigth1_Pin */
-  GPIO_InitStruct.Pin = Mikrofon3_Pin|GPIO_PIN_12|EncoderRigth2_Pin|EncoderLeft1_Pin 
-                          |EncoderRigth1_Pin;
+  /*Configure GPIO pin : Cerpadlo_posun1_Pin */
+  GPIO_InitStruct.Pin = Cerpadlo_posun1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  HAL_GPIO_Init(Cerpadlo_posun1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Dotek_senzor_Pin Encoder_cerpadlo_Pin Mikrofon3_Pin EncoderLeft2_Pin 
+                           EncoderRigth2_Pin EncoderLeft1_Pin EncoderRigth1_Pin */
+  GPIO_InitStruct.Pin = Dotek_senzor_Pin|Encoder_cerpadlo_Pin|Mikrofon3_Pin|EncoderLeft2_Pin 
+                          |EncoderRigth2_Pin|EncoderLeft1_Pin|EncoderRigth1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -520,8 +488,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(Utrasound_sens1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : STEP4_Pin STEP1_Pin STEP3_Pin STEP2_Pin */
-  GPIO_InitStruct.Pin = STEP4_Pin|STEP1_Pin|STEP3_Pin|STEP2_Pin;
+  /*Configure GPIO pin : Cerpadlo_posun2_Pin */
+  GPIO_InitStruct.Pin = Cerpadlo_posun2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  HAL_GPIO_Init(Cerpadlo_posun2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : cerpadlo_externi_Pin STEP4_Pin STEP1_Pin STEP3_Pin 
+                           STEP2_Pin */
+  GPIO_InitStruct.Pin = cerpadlo_externi_Pin|STEP4_Pin|STEP1_Pin|STEP3_Pin 
+                          |STEP2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

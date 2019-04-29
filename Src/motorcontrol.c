@@ -8,6 +8,44 @@
 #include "Ultrasound.h"
 #include "main.h"
 
+int set_speed_rigth;
+int set_speed_left;
+int16_t speed1;
+int16_t speed2;
+int16_t speed3;
+int16_t speed4;
+
+int16_t speed_cerpadlo_nahoru;
+int16_t speed_cerpadlo_dolu;
+
+uint16_t chan1; //cas za jaky se posunulo kolo o úhel...pùjde zpøesnit když pøidáme 4 kanály ale zatím snad staèí tak
+uint16_t chan2; //cas za jaky se posunulo kolo o úhel...pùjde zpøesnit když pøidáme 4 kanály ale zatím snad staèí tak
+
+int response;
+uint8_t a;
+uint8_t b;
+int Kp;
+float Ki;
+int	Kd;
+float Integral;
+float LastError;
+float Derivate;
+int pow1;
+int pow2;
+int otacky1;
+int otacky2;
+float error;
+float Turn;
+uint32_t timer;
+uint32_t timer2;
+int Kp2;
+float Ki2;
+int	Kd2;
+float Integral2;
+float LastError2;
+float Derivate2;
+int etalon;
+
 uint8_t stop;
 uint8_t total_stop;
 int logic;
@@ -20,11 +58,6 @@ int currentdistance;
 void set_stop(uint8_t valuestop,uint8_t valuetotal_stop){
 	stop = valuestop;
 	total_stop=valuetotal_stop;
-}
-
-void posun_cerpadla(TIM_HandleTypeDef *htim,uint8_t smer)
-{
-
 }
 
 void PID_podle_ultrazvuku(TIM_HandleTypeDef *htim)
@@ -48,6 +81,8 @@ void start_motor_control(TIM_HandleTypeDef *htim){
 	speed2 = 0;
 	speed3 = 0;
 	speed4 = 0;
+	speed_cerpadlo_nahoru = 0;
+	speed_cerpadlo_dolu = 0;
 	HAL_TIM_PWM_Init(htim);
 	HAL_TIM_PWM_Start(htim,TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(htim,TIM_CHANNEL_2);
