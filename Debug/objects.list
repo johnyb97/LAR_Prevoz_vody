@@ -16,6 +16,7 @@
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart.o"
 "Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart_ex.o"
 "Src/Bluetooth.o"
+"Src/Cerpadlo.o"
 "Src/External_interupt.o"
 "Src/Step_eng.o"
 "Src/Ultrasound.o"

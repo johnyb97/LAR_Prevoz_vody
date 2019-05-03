@@ -1,7 +1,0 @@
-Cerpadlo.c:16:6:HAL_IncTick	8	static
-Cerpadlo.c:35:6:start_cerpani_v_nadrzi	8	static
-Cerpadlo.c:42:6:start_cerpani_v_rameni	8	static
-Cerpadlo.c:51:6:set_speed_cerpadla	0	static
-Cerpadlo.c:67:6:posun_cerpadla	16	static
-Cerpadlo.c:108:6:start_cerpadlo_control	0	static
-Cerpadlo.c:113:6:reset_poss_cerpadla	0	static
