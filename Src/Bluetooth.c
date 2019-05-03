@@ -11,6 +11,7 @@ uint8_t bluetooth_memory;
 uint8_t get_bluetooth(void){
 	return bluetooth_memory;
 }
+
 void start_bluetooth(UART_HandleTypeDef *huart){
       HAL_UART_Init(huart);
 	  HAL_UART_Transmit_IT(huart,&bluetooth_memory,1);

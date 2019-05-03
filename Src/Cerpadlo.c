@@ -34,14 +34,14 @@ int speed_cerpadla;
 int timeout;
 void start_cerpani_v_nadrzi(int time){
 	HAL_GPIO_WritePin(cerpadlo_interni_GPIO_Port,cerpadlo_interni_Pin,GPIO_PIN_SET);
-	timeout = HAL_GetTick()+time;
+	timeout = HAL_GetTick()+(time*100);
 	while(HAL_GetTick()<timeout){
 	}
 	HAL_GPIO_WritePin(cerpadlo_interni_GPIO_Port,cerpadlo_interni_Pin,GPIO_PIN_RESET);
 }
 void start_cerpani_v_rameni(int time){
 	HAL_GPIO_WritePin(cerpadlo_externi_GPIO_Port,cerpadlo_externi_Pin,GPIO_PIN_SET);
-	timeout = HAL_GetTick()+time;
+	timeout = HAL_GetTick()+(time*100);
 	while(HAL_GetTick()<timeout){
 	}
 	HAL_GPIO_WritePin(cerpadlo_externi_GPIO_Port,cerpadlo_externi_Pin,GPIO_PIN_RESET);

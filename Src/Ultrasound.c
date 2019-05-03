@@ -6,6 +6,7 @@
  */
 
 #include "Ultrasound.h"
+#include "motorcontrol.h"
 
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
@@ -23,6 +24,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 			logic2 =0;
 		}
 	}
+
   /* NOTE : This function should not be modified, when the callback is needed,
             the HAL_TIM_PWM_PulseFinishedCallback could be implemented in the user file
    */

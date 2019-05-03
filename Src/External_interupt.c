@@ -47,4 +47,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				 //
 			}
 		}
+	if (GPIO_Pin == Dotek_senzor_Pin){
+		if (HAL_GPIO_ReadPin(Dotek_senzor_GPIO_Port, Dotek_senzor_Pin) == GPIO_PIN_SET){
+			set_stop(0,1);
+		}
+	}
 }

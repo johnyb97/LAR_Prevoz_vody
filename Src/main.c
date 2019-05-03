@@ -126,22 +126,50 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM22_Init();
   /* USER CODE BEGIN 2 */
+  init_ultrasound(&htim22);
   start_motor_control(&htim3);
   start_cerpadlo_control();
   init_PID();
   init_PID_ultrazvuk();
   start_encoder();
+  posun_cerpadla(nahoru);
+  Travel_rovne(&htim3,10,600);
+  HAL_Delay(1000);
+  posun_cerpadla(dolu);
+  HAL_Delay(1000);
+  start_cerpani_v_rameni(800); //10 = 1s
+  posun_cerpadla(nahoru);
+  set_stop(0,0);
+  Travel_rovne(&htim3,0.5,-500);
+  HAL_Delay(1000);
+  set_stop(0,0);
+  Travel_turn(&htim3,80,1000);
+  HAL_Delay(1000);
+  set_stop(0,0);
+  Travel_rovne(&htim3,10,600);
+  HAL_Delay(1000);
+  start_cerpani_v_nadrzi(800); //10 = 1s
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  posun_cerpadla(nahoru);
+	  /*
+	  set_stop(0,0);
+	  Travel_rovne(&htim3,100,500);
+	  set_stop(0,0);
 	  HAL_Delay(1000);
+	  Travel_rovne(&htim3,100,100);
 	  posun_cerpadla(dolu);
+	  posun_cerpadla(nahoru
+	  );
+	  HAL_Delay(1000);
 	  start_cerpani_v_nadrzi(1000);
 	  start_cerpani_v_rameni(1000);
+	  */
+
 
     /* USER CODE END WHILE */
 
@@ -461,19 +489,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(Cerpadlo_posun1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Dotek_senzor_Pin Encoder_cerpadlo_Pin Mikrofon3_Pin EncoderLeft2_Pin 
-                           EncoderRigth2_Pin EncoderLeft1_Pin EncoderRigth1_Pin */
-  GPIO_InitStruct.Pin = Dotek_senzor_Pin|Encoder_cerpadlo_Pin|Mikrofon3_Pin|EncoderLeft2_Pin 
-                          |EncoderRigth2_Pin|EncoderLeft1_Pin|EncoderRigth1_Pin;
+  /*Configure GPIO pins : Encoder_cerpadlo_Pin Mikrofon3_Pin EncoderLeft2_Pin EncoderRigth2_Pin 
+                           EncoderLeft1_Pin EncoderRigth1_Pin */
+  GPIO_InitStruct.Pin = Encoder_cerpadlo_Pin|Mikrofon3_Pin|EncoderLeft2_Pin|EncoderRigth2_Pin 
+                          |EncoderLeft1_Pin|EncoderRigth1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Mikrofon1_Pin Mikrofon2_Pin */
-  GPIO_InitStruct.Pin = Mikrofon1_Pin|Mikrofon2_Pin;
+  /*Configure GPIO pin : Mikrofon1_Pin */
+  GPIO_InitStruct.Pin = Mikrofon1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(Mikrofon1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : cerpadlo_interni_Pin */
   GPIO_InitStruct.Pin = cerpadlo_interni_Pin;
@@ -481,6 +509,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(cerpadlo_interni_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Dotek_senzor_Pin */
+  GPIO_InitStruct.Pin = Dotek_senzor_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(Dotek_senzor_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Utrasound_sens1_Pin */
   GPIO_InitStruct.Pin = Utrasound_sens1_Pin;

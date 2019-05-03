@@ -11,7 +11,7 @@
 #include "main.h"
 #define nahoru 1
 #define dolu 0
-#define max_rychlost_cerpadla  7
+#define max_rychlost_cerpadla  9
 #define cerpadlo_timeout 100
 
 int distance_cerpadlo; //poèet pootoèení o úhel encoderu...pozor bude se lišit pøi zapojení všech 4 enkodérù a jen 2...

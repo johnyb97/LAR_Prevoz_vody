@@ -66,3 +66,5 @@ Apr 29, 2019 4:04:56 PM com.sun.xml.internal.bind.v2.runtime.unmarshaller.SAXCon
 FINER: SAXConnector.endPrefixMapping: dc
 Apr 29, 2019 4:04:56 PM com.sun.xml.internal.bind.v2.runtime.unmarshaller.SAXConnector endDocument
 FINER: SAXConnector.endDocument
+Apr 29, 2019 4:08:26 PM edu.hawaii.ics.csdl.jupiter.util.JupiterLogger debug
+INFO: the window was closed.

@@ -93,8 +93,6 @@ void Error_Handler(void);
 #define PWMmotorLeft1_GPIO_Port GPIOB
 #define PWMmotorLeft2_Pin GPIO_PIN_1
 #define PWMmotorLeft2_GPIO_Port GPIOB
-#define Dotek_senzor_Pin GPIO_PIN_2
-#define Dotek_senzor_GPIO_Port GPIOB
 #define Encoder_cerpadlo_Pin GPIO_PIN_10
 #define Encoder_cerpadlo_GPIO_Port GPIOB
 #define Encoder_cerpadlo_EXTI_IRQn EXTI4_15_IRQn
@@ -120,9 +118,9 @@ void Error_Handler(void);
 #define Mikrofon1_EXTI_IRQn EXTI4_15_IRQn
 #define cerpadlo_interni_Pin GPIO_PIN_8
 #define cerpadlo_interni_GPIO_Port GPIOC
-#define Mikrofon2_Pin GPIO_PIN_9
-#define Mikrofon2_GPIO_Port GPIOC
-#define Mikrofon2_EXTI_IRQn EXTI4_15_IRQn
+#define Dotek_senzor_Pin GPIO_PIN_9
+#define Dotek_senzor_GPIO_Port GPIOC
+#define Dotek_senzor_EXTI_IRQn EXTI4_15_IRQn
 #define Utrasound_sens1_Pin GPIO_PIN_8
 #define Utrasound_sens1_GPIO_Port GPIOA
 #define Utrasound_sens1_EXTI_IRQn EXTI4_15_IRQn
