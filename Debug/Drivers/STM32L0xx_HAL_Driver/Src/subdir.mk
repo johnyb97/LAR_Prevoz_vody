@@ -66,7 +66,7 @@ Drivers/STM32L0xx_HAL_Driver/Src/%.o: ../Drivers/STM32L0xx_HAL_Driver/Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32L073xx -I"C:/Users/jirka/Documents/skola/4 semestr/LAR-hLAVNI/LAR_Prevoz_vody/Inc" -I"C:/Users/jirka/Documents/skola/4 semestr/LAR-hLAVNI/LAR_Prevoz_vody/Drivers/STM32L0xx_HAL_Driver/Inc" -I"C:/Users/jirka/Documents/skola/4 semestr/LAR-hLAVNI/LAR_Prevoz_vody/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy" -I"C:/Users/jirka/Documents/skola/4 semestr/LAR-hLAVNI/LAR_Prevoz_vody/Drivers/CMSIS/Device/ST/STM32L0xx/Include" -I"C:/Users/jirka/Documents/skola/4 semestr/LAR-hLAVNI/LAR_Prevoz_vody/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32L073xx -I"C:/Users/janbe/Desktop/Pokus/Pokus/Inc" -I"C:/Users/janbe/Desktop/Pokus/Pokus/Drivers/STM32L0xx_HAL_Driver/Inc" -I"C:/Users/janbe/Desktop/Pokus/Pokus/Drivers/STM32L0xx_HAL_Driver/Inc/Legacy" -I"C:/Users/janbe/Desktop/Pokus/Pokus/Drivers/CMSIS/Device/ST/STM32L0xx/Include" -I"C:/Users/janbe/Desktop/Pokus/Pokus/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

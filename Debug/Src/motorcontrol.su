@@ -1,0 +1,14 @@
+motorcontrol.c:60:6:set_stop	0	static
+motorcontrol.c:81:6:start_motor_control	32	static
+motorcontrol.c:105:5:set_motor_speed	8	static
+motorcontrol.c:99:6:set_speed	8	static
+motorcontrol.c:271:5:saturation	0	static
+motorcontrol.c:65:6:PID_podle_ultrazvuku	32	static
+motorcontrol.c:140:6:PID_regularor	32	static
+motorcontrol.c:281:6:init_PID	0	static
+motorcontrol.c:293:6:init_PID_ultrazvuk	0	static
+motorcontrol.c:306:6:start_encoder	0	static
+motorcontrol.c:310:6:reset_distance	0	static
+motorcontrol.c:314:5:distance_traveled	0	static
+motorcontrol.c:153:5:Travel_rovne	16	static
+motorcontrol.c:210:5:Travel_turn	16	static
